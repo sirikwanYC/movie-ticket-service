@@ -1,9 +1,9 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var app = express()
-var Movie = require('./movieModel.js')
-var Seat = require('./seatModel.js')
-var Ticket = require('./buyTicketModal.js')
+var Movie = require('./movieModel')
+var Seat = require('./seatModel')
+var Ticket = require('./buyTicketModal')
 var bodyParser = require("body-parser")
 
 var urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
