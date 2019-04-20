@@ -7,10 +7,7 @@ const { Ticket } = require('./src/models/buyTicketModal')
 
 const urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
 
-mongoose.connect(urlDB, { useNewUrlParser: true }).then(
-  () => { console.log('connected') },
-  err => { console.log(err) }
-)
+mongoose.connect(urlDB, { useNewUrlParser: true })
 
 app.use(express.static(__dirname + '/public'))
 
@@ -25,15 +22,15 @@ app.get('/get-all-movie', function (request, response) {
 })
 
 app.get('/get-seat-movie/name-movie/:nameMovie/round-movie/:roundMovie', function (request, response) {
-  Seat.findOne({ movie_name: req.params.nameMovie, round_movie: req.params.roundMovie },
+  Seat.findOne({ movie_name: request.params.nameMovie, round_movie: request.params.roundMovie },
     function (err, result) {
       response.json(result)
     }).lean()
 })
 
 app.post('/insert-ticket', function (request, response) {
-  const { movie_id, round_movie, movie_name, seat } = req.body
-  const newTicket = new Ticket(req.body)
+  const { movie_id, round_movie, movie_name, seat } = request.body
+  const newTicket = new Ticket(request.body)
   newTicket.save(function (err) {
     if (err) response.status(401).end()
     else response.status(200).end()
