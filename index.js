@@ -1,7 +1,7 @@
 var express = require('express')
 const mongoose = require('mongoose')
 var app = express()
-const { Movie } = require('movieModel.js')
+const { Movie } = require('./movieModel.js')
 
 const urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
 
