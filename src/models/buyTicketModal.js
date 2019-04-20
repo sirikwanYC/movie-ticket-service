@@ -13,4 +13,6 @@ const buyTicketSchema = new mongoose.Schema({
 
 const Ticket = mongoose.model('all_ticket_movie', buyTicketSchema)
 
-module.exports = Ticket
+module.exports = {
+    Ticket
+}

@@ -20,4 +20,6 @@ const movieSchema = new mongoose.Schema({
 
 
 const Movie = mongoose.model('all_movie', movieSchema)
-module.exports = Movie
+module.exports = {
+    Movie
+}
