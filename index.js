@@ -29,8 +29,8 @@ app.get('/get-seat-movie/name-movie/:nameMovie/round-movie/:roundMovie', functio
 })
 
 app.post('/insert-ticket', function (request, response) {
-  const { movie_id, round_movie, movie_name, seat } = request.body
-  const newTicket = new Ticket(request.body)
+  var { movie_id, round_movie, movie_name, seat } = request.body
+  var newTicket = new Ticket(request.body)
   newTicket.save(function (err) {
     if (err) response.status(401).end()
     else response.status(200).end()
@@ -42,14 +42,14 @@ app.post('/insert-ticket', function (request, response) {
         Seat.updateOne({ movie_id }, { $push: { seat } },
           function () { })
       } else {
-        const newSeat = new Seat({ movie_id, movie_name, round_movie, seat })
+        var newSeat = new Seat({ movie_id, movie_name, round_movie, seat })
         newSeat.save(function () { })
       }
     })
 })
 
 app.get('/search-movie', function (request, response) {
-  const { name_movie, sort } = request.query
+  var { name_movie, sort } = request.query
   Movie.find({
     $or: [
       { name_movie_en: { '$regex': name_movie, '$options': 'i' } },
