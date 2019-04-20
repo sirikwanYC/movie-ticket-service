@@ -1,6 +1,7 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require("body-parser")
+var cors = require('cors')
 var app = express()
 
 var urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
