@@ -1,10 +1,9 @@
 {
-  "name": "movie-ticket-service",
+  "name": "movie-ticket-api",
   "version": "0.2.0",
-  "description": "A sample Node.js app using Express 4",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.13.3"
@@ -17,6 +16,5 @@
     "heroku",
     "express"
   ],
-  "author": "sirikwan yanchan",
   "license": "MIT"
 }
