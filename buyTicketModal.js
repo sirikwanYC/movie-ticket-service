@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
-var buyTicketSchema = new mongoose.Schema({
+var buyTicketSchema = new Schema({
     name: { type: String, required: true},
     mail: String,
     tel: String,
@@ -11,6 +12,4 @@ var buyTicketSchema = new mongoose.Schema({
 }, {collection: 'all_ticket_movie'})
 
 
-var Ticket = mongoose.model('all_ticket_movie', buyTicketSchema)
-
-module.exports = Ticket
+module.exports = mongoose.model('all_ticket_movie', buyTicketSchema)

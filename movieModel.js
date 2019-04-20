@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
-var movieSchema = new mongoose.Schema({
+var movieSchema = new Schema({
     nameMovieEN: String,
     nameMovieTH: String,
     srcImg: String,
@@ -18,7 +19,4 @@ var movieSchema = new mongoose.Schema({
     }
 }, {collection: 'all_movie'})
 
-
-var Movie = mongoose.model('all_movie', movieSchema)
-
-module.exports = Movie
+module.exports = mongoose.model('all_movie', movieSchema)
