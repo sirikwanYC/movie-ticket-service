@@ -1,5 +1,6 @@
 var express = require('express')
 var mongoose = require('mongoose')
+var bodyParser = require("body-parser")
 var app = express()
 
 var urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
@@ -9,6 +10,10 @@ mongoose.connect(urlDB, { useNewUrlParser: true }).then(function () {
 })
 
 app.set('port', (process.env.PORT || 5000))
+
+app.use(bodyParser.urlencoded({'extended':'true'}))
+app.use(bodyParser.json())
+app.use(bodyParser.json({ type : 'application/vnd.api+json'}))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function (request, response) {
@@ -16,7 +21,7 @@ app.get('/', function (request, response) {
 })
 
 app.get('/get-all-movie', function (request, response) {
-  
+
   var Schema = mongoose.Schema
 
   var movieSchema = new Schema({
