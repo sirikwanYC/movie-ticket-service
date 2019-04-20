@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const mongoose = require('mongoose')
-const route = require('./route')
+const route = require('./src/route')
 
 const urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
 
@@ -18,6 +18,8 @@ server.use(
       extended: true,
     }),
   )
+
+server.use(express.static(__dirname + '/public'))
 
 route(server)
 
