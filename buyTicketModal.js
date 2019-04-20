@@ -13,6 +13,4 @@ var buyTicketSchema = new mongoose.Schema({
 
 var Ticket = mongoose.model('all_ticket_movie', buyTicketSchema)
 
-module.exports = {
-    Ticket
-}
+module.exports = Ticket

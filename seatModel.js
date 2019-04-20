@@ -9,6 +9,4 @@ var seatSchema = new mongoose.Schema({
 
 var Seat = mongoose.model('all_seat_movie', seatSchema)
 
-module.exports = {
-    Seat
-}
+module.exports = Seat
