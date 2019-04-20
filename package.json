@@ -1,0 +1,17 @@
+{
+  "name": "movie-ticket-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/server.js"
+  },
+  "dependencies": {
+    "body-parser": "1.18.*",
+    "express": "4.16.*",
+    "mongoose": "5.5.2"
+  },
+  "engines": {
+    "node": "11.14.0"
+  }
+}
