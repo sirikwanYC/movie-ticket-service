@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 
 var movieSchema = new mongoose.Schema({
     nameMovieEN: String,
@@ -16,9 +16,9 @@ var movieSchema = new mongoose.Schema({
         premium: Number,
         sofaSweet: Number
     }
-}, {collection: 'all_movie'})
+}, {collection: 'all_movie'});
 
 
-var Movie = mongoose.model('all_movie', movieSchema)
+var Movie = mongoose.model('all_movie', movieSchema);
 
-module.exports = Movie
+module.exports = Movie;
