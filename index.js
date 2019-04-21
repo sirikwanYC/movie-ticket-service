@@ -110,7 +110,7 @@ app.post('/insert-ticket', function (request, response) {
     let mailOptions = {
       from: '"Movie Ticket" <movie.ticket2019@gmail.com>', 
       to: request.body.mail, 
-      subject: 'รายละเอียดตั๋วภาพยนตร์ คุณ' + request.name, 
+      subject: 'รายละเอียดตั๋วภาพยนตร์ คุณ ' + request.body.name, 
       html: `<span> สามารถเข้าไปดูรายละเอียดตั๋วภาพยนตร์ได้ </span> <a href="https://movie-ticket-a8a41.firebaseapp.com/show-ticket/${idTicket}" > คลิกที่นี่่ </a>`, 
     }
 
