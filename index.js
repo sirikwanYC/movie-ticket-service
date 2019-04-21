@@ -2,6 +2,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require("body-parser")
 var cors = require('cors')
+var nodemailer = require("nodemailer")
 var app = express()
 
 var urlDB = 'mongodb+srv://movie-ticket:aZA2pTp0PHHz1PZ2@movie-ticker-lq4km.gcp.mongodb.net/movie_ticket?retryWrites=true'
@@ -42,22 +43,23 @@ var movieSchema = new Schema({
 var Movie = mongoose.model('all_movie', movieSchema)
 
 var buyTicketSchema = new Schema({
-  name: { type: String, required: true},
+  name: { type: String, required: true },
   mail: String,
   tel: String,
-  movie_id: { type: String, required: true},
+  theater: Number,
+  movie_id: { type: String, required: true },
   movie_name: { type: String, required: true },
   round_movie: { type: String, required: true },
-  seat: [{ type: String, required: true}],
-}, {collection: 'all_ticket_movie'})
+  seat: [{ type: String, required: true }],
+}, { collection: 'all_ticket_movie' })
 var Ticket = mongoose.model('all_ticket_movie', buyTicketSchema)
 
 var seatSchema = new Schema({
   movie_id: String,
   movie_name: String,
   round_movie: String,
-  seat: [ String ]
-}, {collection: 'all_seat_movie'})
+  seat: [String]
+}, { collection: 'all_seat_movie' })
 var Seat = mongoose.model('all_seat_movie', seatSchema)
 
 
@@ -82,14 +84,44 @@ app.post('/insert-ticket', function (request, response) {
   var movie_id = request.body.movie_id
   var round_movie = request.body.round_movie
   var movie_name = request.body.movie_name
-  var seat  = request.body.seat
+  var seat = request.body.seat
+  var theater = request.body.theater
+  var dateCreate = request.body.date
+
+  var idTicket  = ''
 
   var newTicket = new Ticket(request.body)
 
-  newTicket.save(function (err) {
-    if (err) response.status(401).end()
-    else response.status(200).end()
+  newTicket.save(function (err, res) {
+    idTicket = res._id
+    response.json(res)
   })
+
+  if (request.body.mail.length !== 0) {
+    let transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'movie.ticket2019@gmail.com',
+        pass: '6BZJkpBfHzRs5H5'
+      }
+    })
+    let mailOptions = {
+      from: '"Movie Ticket" <movie.ticket2019@gmail.com>', 
+      to: request.body.mail, 
+      subject: 'รายละเอียดตั๋วภาพยนตร์ คุณ' + request.name, 
+      html: `<span> สามารถเข้าไปดูรายละเอียดตั๋วภาพยนตร์ได้ </span> <a href="https://movie-ticket-a8a41.firebaseapp.com/show-ticket/${idTicket}" > คลิกที่นี่่ </a>`, 
+    }
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      res.render('index');
+    })
+  }
 
   Seat.findOne({ movie_id, round_movie },
     function (err, result) {
