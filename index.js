@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ 'extended': 'true' }))
 app.use(bodyParser.json())
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 app.use(cors({
-  origin: 'https://movie-ticket-a8a41.firebaseapp.com',
+  origin: 'http://localhost:3000',
   credentials: true
 }))
 app.use(express.static(__dirname + '/public'))
@@ -73,6 +73,18 @@ app.get('/get-all-movie', function (request, response) {
   }).lean()
 })
 
+app.get('/get-movie/:id', function (request, response) {
+  Movie.findById(request.params.id, function (err, result) {
+    response.json(result)
+  }).lean()
+})
+
+app.get('/get-ticket/:id', function (request, response) {
+  Ticket.findById(request.params.id, function (err, result) {
+    response.json(result)
+  }).lean()
+})
+
 app.get('/get-seat-movie/name-movie/:nameMovie/round-movie/:roundMovie', function (request, response) {
   Seat.findOne({ movie_name: request.params.nameMovie, round_movie: request.params.roundMovie },
     function (err, result) {
@@ -93,6 +105,7 @@ app.post('/insert-ticket', function (request, response) {
   var newTicket = new Ticket(request.body)
 
   newTicket.save(function (err, res) {
+    console.log(res)
     idTicket = res._id
     response.json(res)
   })
