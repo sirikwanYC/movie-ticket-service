@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ 'extended': 'true' }))
 app.use(bodyParser.json())
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://movie-ticket-a8a41.firebaseapp.com',
   credentials: true
 }))
 app.use(express.static(__dirname + '/public'))
