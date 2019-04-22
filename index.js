@@ -100,41 +100,38 @@ app.post('/insert-ticket', function (request, response) {
   var theater = request.body.theater
   var dateCreate = request.body.date
 
-  var idTicket  = ''
-
   var newTicket = new Ticket(request.body)
 
   newTicket.save(function (err, res) {
-    console.log(res)
-    idTicket = res._id
     response.json(res)
+
+    if (request.body.mail.length !== 0) {
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: 'movie.ticket2019@gmail.com',
+          pass: '6BZJkpBfHzRs5H5'
+        }
+      })
+      let mailOptions = {
+        from: '"Movie Ticket" <movie.ticket2019@gmail.com>', 
+        to: request.body.mail, 
+        subject: 'รายละเอียดตั๋วภาพยนตร์ คุณ ' + request.body.name, 
+        html: `<span> สามารถเข้าไปดูรายละเอียดตั๋วภาพยนตร์ได้ </span> <a href="https://movie-ticket-a8a41.firebaseapp.com/show-ticket/${res._id}" > คลิกที่นี่่ </a>`, 
+      }
+  
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+        res.render('index');
+      })
+    }
   })
 
-  if (request.body.mail.length !== 0) {
-    let transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: 'movie.ticket2019@gmail.com',
-        pass: '6BZJkpBfHzRs5H5'
-      }
-    })
-    let mailOptions = {
-      from: '"Movie Ticket" <movie.ticket2019@gmail.com>', 
-      to: request.body.mail, 
-      subject: 'รายละเอียดตั๋วภาพยนตร์ คุณ ' + request.body.name, 
-      html: `<span> สามารถเข้าไปดูรายละเอียดตั๋วภาพยนตร์ได้ </span> <a href="https://movie-ticket-a8a41.firebaseapp.com/show-ticket/${idTicket}" > คลิกที่นี่่ </a>`, 
-    }
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-      res.render('index');
-    })
-  }
 
   Seat.findOne({ movie_id, round_movie },
     function (err, result) {
